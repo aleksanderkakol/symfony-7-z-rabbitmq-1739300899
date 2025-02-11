@@ -1,5 +1,7 @@
+on: [pull_request]
+
 jobs:
-  test:unit:
+  test_unit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
