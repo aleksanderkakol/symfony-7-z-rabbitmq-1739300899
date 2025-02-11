@@ -17,7 +17,7 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: 8.3
-          php_extensions: "json zip sodium pcntl bcmath"
+          php_extensions: "zip pcntl"
 
       - name: Running unit test
         uses: php-actions/phpunit@v3
@@ -27,5 +27,4 @@ jobs:
           php_extensions: "zip pcntl"
           args: "-d date.timezone=Europe/Warsaw"
           memory_limit: 128M
-          configuration: phpunit.xml
           testsuite: unittest
