@@ -5,3 +5,16 @@ services:
     volumes:
       - .:/var/www
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+  
+  nginx:
+        build: docker/nginx
+        ports:
+            - "${BIND_IP}:${APP_PORT}:80"
+            - "${BIND_IP}:${APP_PORT_SSL}:443"
+        volumes_from:
+            - php
+        volumes:
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./var/log/nginx/:/var/log/nginx
+        command: [nginx-debug, '-g', 'daemon off;']
+  

@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Routing\Attribute\Route;
+
+class FileController extends AbstractController
+{
+    public function __construct(
+        private readonly MessageBusInterface $commandBus,
+        private readonly LoggerInterface $logger,
+    ) {
+    }
+
+    #[Route(path: '/upload/csv', name: 'app_api_upload_csv', methods: ['GET','POST'])]
+    public function uploadCsv(
+        #[MapUploadedFile([
+            new Assert\File(mimeTypes: ['text/csv'])
+        ])]
+        UploadedFile $csv
+    ): Response {
+        return new Response('xxxx');
+    }
+
+}
