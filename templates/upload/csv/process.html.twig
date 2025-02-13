@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Processing CSV File</h1>
+    <div id="progress-container" style="width: 100%; background: #ccc; height: 30px;">
+        <div id="progress-bar" style="width: 0%; background: green; height: 100%;"></div>
+    </div>
+    <p id="progress-text">0%</p>
+    <p id="errors"></p>
+
+    <script>
+        function updateProgress() {
+            fetch('{{ path('csv_progress', {'fileName': fileName}) }}')
+                .then(response => response.json())
+                .then(data => {
+                    let progress = data.progress;
+                    document.getElementById('progress-bar').style.width = progress + '%';
+                    document.getElementById('progress-text').innerText = progress + '%';
+
+                    if (progress < 100) {
+                        setTimeout(updateProgress, 1000);
+                    } else {
+                        getErrors();
+                    }
+                });
+        }
+        updateProgress();
+
+        function getErrors() {
+            fetch('{{ path('csv_errors', {'fileName': fileName}) }}')
+                .then(response => response.json())
+                .then(data => {
+                    let numberOfErrors = data.errors;
+                    if (numberOfErrors) {
+                        document.getElementById('errors').innerText = `Number of errors: ${numberOfErrors}`;
+                    }
+                });
+        }
+    </script>
+{% endblock %}

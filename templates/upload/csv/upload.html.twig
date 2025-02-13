@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Upload CSV File</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+    <input name="file" type="file">
+    <button type="submit">Upload</button>
+    </form>
+{% endblock %}
