@@ -25,6 +25,6 @@ RUN docker-php-ext-install pdo pdo_mysql zip intl opcache \
     && docker-php-ext-enable amqp
 
 RUN wget https://get.symfony.com/cli/installer -O - | bash \
-    && echo 'export PATH="$HOME/.symfony5/bin:/var/www/bin:$PATH"' >> ~/.bashrc
+    && echo 'export PATH="$HOME/.symfony/bin:/var/www/bin:$PATH"' >> ~/.bashrc
 
 WORKDIR /var/www

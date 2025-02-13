@@ -78,11 +78,11 @@
             "@auto-scripts"
         ],
         "migrate": [
-            "console doctrine:migration:migrate -n --em=default"
+            "bin/console doctrine:migration:migrate -n --em=default"
         ],
         "recreate-db": [
-            "console doctrine:database:drop --force --if-exists",
-            "console doctrine:database:create",
+            "bin/console doctrine:database:drop --force --if-exists",
+            "bin/console doctrine:database:create",
             "@migrate"
         ]
     },
