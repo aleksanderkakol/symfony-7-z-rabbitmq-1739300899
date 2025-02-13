@@ -1,0 +1,19 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    Predis\Client:
+        arguments:
+            - '%env(REDIS_DSN)%'
+
+    Predis\ClientInterface: '@Predis\Client'

@@ -19,8 +19,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone \
     && printf '[Date]\ndate.timezone="%s"\n', $TIMEZONE > /usr/local/etc/php/conf.d/tzone.ini
 
-RUN docker-php-ext-install zip intl opcache \
-    && docker-php-ext-configure intl
+RUN docker-php-ext-install pdo pdo_mysql zip intl opcache \
+    && docker-php-ext-configure intl \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp
 
 RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && echo 'export PATH="$HOME/.symfony5/bin:/var/www/bin:$PATH"' >> ~/.bashrc

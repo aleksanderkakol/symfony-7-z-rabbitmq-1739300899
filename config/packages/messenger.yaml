@@ -1,0 +1,27 @@
+framework:
+    messenger:
+        default_bus: command.bus
+        buses:
+            command.bus:
+                default_middleware: false
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_transaction
+                    - send_message
+                    - App\Core\Service\Messenger\Middleware\ValidateMiddleware
+                    - handle_message
+            query.bus:
+                middleware:
+                    - validation
+        transports:
+            import_user:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: import_user
+                        type: direct
+                    queues:
+                        import_user: ~
+        routing:
+            App\MessageBus\Command\UploadUserList\UploadUserListCommand: import_user
